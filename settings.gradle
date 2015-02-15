@@ -1,0 +1,2 @@
+include 'metadata-repo-core'
+include 'metadata-repo-plugins/maven-client-plugin'

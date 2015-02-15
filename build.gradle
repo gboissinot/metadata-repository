@@ -1,0 +1,48 @@
+buildscript {
+    repositories {
+	mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+    }
+}
+
+project.ext {
+    junitVersion = '4.11'
+    mongoJavaDriverVerison = '2.11.3'
+    mavenCoreVersion = '2.1.0'
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    group = 'fr.synchrotron.soleil.ica.ci'
+    version = '1.0.0'
+
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile "junit:junit:$junitVersion"
+    }
+}
+
+project(':metadata-repo-core') {
+    dependencies {
+        compile "org.mongodb:mongo-java-driver:$mongoJavaDriverVerison"
+    }
+}
+
+
+project(':metadata-repo-plugins/maven-client-plugin') {
+    dependencies {
+        compile project(':metadata-repo-core')
+        compile "com.thoughtworks.xstream:xstream:1.4.7"
+        testCompile "junit:junit:4.12"
+    }
+}
