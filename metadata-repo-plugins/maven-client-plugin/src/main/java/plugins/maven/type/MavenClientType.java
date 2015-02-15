@@ -14,5 +14,5 @@ public interface MavenClientType {
 
     POMParent getLatestDependencyBOM();
 
-    POMArtifact generateXMLPOM(ModuleId moduleId);
+    POMArtifact generatePOM(ModuleId moduleId);
 }

@@ -23,7 +23,7 @@ abstract class AbstractMavenClientType implements MavenClientType {
     private ModuleExportService moduleExportService;
 
     @Override
-    public POMArtifact generateXMLPOM(ModuleId moduleId) {
+    public POMArtifact generatePOM(ModuleId moduleId) {
         return new POMArtifact(
                 getLatestDependencyBOM(),
                 moduleId.getOrg(),
