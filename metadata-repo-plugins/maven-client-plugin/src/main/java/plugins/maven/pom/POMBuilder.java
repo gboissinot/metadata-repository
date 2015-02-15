@@ -2,6 +2,7 @@ package plugins.maven.pom;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.mapper.MapperWrapper;
 
 import static plugins.maven.pom.POMArtifact.POMArtifactStruct;
 
@@ -23,7 +24,20 @@ public class POMBuilder {
     }
 
     private POMArtifactStruct deserialize(String mavenPOMContent) {
-        XStream xstream = new XStream(new DomDriver("UTF-8"));
+        XStream xstream = new XStream(new DomDriver("UTF-8")) {
+            @Override
+            protected MapperWrapper wrapMapper(MapperWrapper next) {
+                return new MapperWrapper(next) {
+                    @Override
+                    public boolean shouldSerializeMember(Class definedIn, String fieldName) {
+                        if (definedIn == Object.class) {
+                            return false;
+                        }
+                        return super.shouldSerializeMember(definedIn, fieldName);
+                    }
+                };
+            }
+        };
         xstream.alias("project", POMArtifactStruct.class);
         xstream.alias("dependency", POMArtifactStruct.MavenPOMDependencyStruct.class);
         try {

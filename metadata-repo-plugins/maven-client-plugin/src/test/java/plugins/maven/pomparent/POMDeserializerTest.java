@@ -6,9 +6,7 @@ import plugins.maven.pom.*;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * @author Gregory Boissinot
@@ -23,7 +21,7 @@ public class POMDeserializerTest {
     private static POMBuilder pomBuilder;
 
     @BeforeClass
-    public static void setup(){
+    public static void setup() {
         pomBuilder = new POMBuilder();
         pomContext = new POMContext(POM_GROUPID, POM_ARTIFACTID, POM_VERSION);
     }
@@ -64,12 +62,16 @@ public class POMDeserializerTest {
         assertEquals(POM_VERSION, POMArtifact.getVersion().getValue());
     }
 
-    @Test(expected = ConversionExcetion.class)
-    public void wrongPOM() {
+    @Test
+    public void unknownElement() {
         String actualContent = "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n" +
-                "  <unknown>" + POM_GROUPID + "</unknown>\n" +
+                "  <groupId>" + POM_GROUPID + "</groupId>\n" +
+                "  <artifactId>" + POM_ARTIFACTID + "</artifactId>\n" +
+                "  <version>" + POM_VERSION + "</version>\n" +
+                "  <unknown>" + POM_ARTIFACTID + "</unknown>\n" +
                 "</project>";
         pomBuilder.buildFromXML(actualContent, pomContext);
+        assertTrue(true);
     }
 
     @Test
