@@ -7,6 +7,7 @@ public interface ParentVersion {
 
     /**
      * Gets the Maven parent version.
+     *
      * @return the parent version value. Cannot be null.
      */
     String getValue();

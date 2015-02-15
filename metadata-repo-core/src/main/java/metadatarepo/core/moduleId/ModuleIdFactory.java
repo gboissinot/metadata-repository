@@ -17,6 +17,7 @@ public class ModuleIdFactory {
         return new DefaultModuleId(
                 org, name,
                 new ModuleMetaVersion(
-                        VersionFactory.get(version), ModuleStatusFactory.get(status)));
+                        VersionFactory.get(version), ModuleStatusFactory.get(status))
+        );
     }
 }

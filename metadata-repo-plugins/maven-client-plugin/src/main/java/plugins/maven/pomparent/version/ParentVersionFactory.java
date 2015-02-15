@@ -13,8 +13,8 @@ public class ParentVersionFactory {
         return ReleaseKeywordParentVersion.getInstance();
     }
 
-    public static ParentVersion parentVersionWithGivenVersionValue(String version){
-        if (version==null){
+    public static ParentVersion parentVersionWithGivenVersionValue(String version) {
+        if (version == null) {
             throw new IllegalStateException("A parent version is required.");
         }
         return new SimpleParentVersion(version);

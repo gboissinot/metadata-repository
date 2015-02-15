@@ -28,6 +28,7 @@ public class ModuleMetaVersion {
 
     /**
      * Return the module version
+     *
      * @return the @Version object. Never null.
      */
     public Version getVersion() {

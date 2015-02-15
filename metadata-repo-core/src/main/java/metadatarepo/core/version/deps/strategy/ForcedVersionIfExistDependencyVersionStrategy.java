@@ -6,9 +6,8 @@ import metadatarepo.core.version.Version;
 
 /**
  * @author Gregory Boissinot
- *
- * Version stratgey that returns the given version in the build dependency section if exists.
- *
+ *         <p/>
+ *         Version stratgey that returns the given version in the build dependency section if exists.
  */
 public class ForcedVersionIfExistDependencyVersionStrategy implements DependencyVersionStrategy {
     @Override
