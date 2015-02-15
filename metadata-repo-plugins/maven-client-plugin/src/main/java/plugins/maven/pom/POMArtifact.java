@@ -71,7 +71,7 @@ public class POMArtifact implements POM {
         }
 
         POMArtifactStruct pomArtifactStruct = deserialize(mavenPOMContent);
-        return pomArtifactStruct.build(pomContext);
+        return pomArtifactStruct.fromXML(pomContext);
     }
 
     private POMArtifactStruct deserialize(String mavenPOMContent) {
@@ -197,7 +197,7 @@ public class POMArtifact implements POM {
          * @param pomContext The input maven context if the given maven pom use optional fields
          * @return the Maven POM object without a Maven POM Parent
          */
-        public POMArtifact build(POMContext pomContext) {
+        public POMArtifact fromXML(POMContext pomContext) {
             Version pomVersion = extractMavenPOMVersion(pomContext);
             String groupId = extractGroupId(pomContext);
             String artifactId = extractArtifactId();

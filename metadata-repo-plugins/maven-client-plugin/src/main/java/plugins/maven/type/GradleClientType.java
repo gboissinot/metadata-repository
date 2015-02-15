@@ -8,7 +8,7 @@ import plugins.maven.pomparent.POMParentFactory;
 /**
  * @author Gregory Boissinot
  */
-class GradleClientType implements MavenClientType {
+class GradleClientType extends AbstractMavenClientType {
 
     private static GradleClientType instance = new GradleClientType();
 

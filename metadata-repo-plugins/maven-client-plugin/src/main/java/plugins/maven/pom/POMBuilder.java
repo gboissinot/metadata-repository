@@ -2,9 +2,6 @@ package plugins.maven.pom;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import plugins.maven.pom.POMArtifact;
-import plugins.maven.pom.POMContext;
-import plugins.maven.pom.ConversionExcetion;
 
 import static plugins.maven.pom.POMArtifact.POMArtifactStruct;
 
@@ -22,7 +19,7 @@ public class POMBuilder {
         }
 
         POMArtifactStruct pomArtifactStruct = deserialize(mavenPOMContent);
-        return pomArtifactStruct.build(pomContext);
+        return pomArtifactStruct.fromXML(pomContext);
     }
 
     private POMArtifactStruct deserialize(String mavenPOMContent) {

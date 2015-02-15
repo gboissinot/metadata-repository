@@ -9,7 +9,7 @@ import plugins.maven.pomparent.version.ParentVersionFactory;
 /**
  * @author Gregory Boissinot
  */
-class Mvn3ClientType implements MavenClientType {
+class Mvn3ClientType extends AbstractMavenClientType {
 
     private static POMParent POM_PARENT_WITH_LATEST =
             POMParentFactory.bomDeps(ParentVersionFactory.parentVersionWithWideRange());
