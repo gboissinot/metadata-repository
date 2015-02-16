@@ -15,7 +15,7 @@ public class BOMBuild extends AbstractPOMParent {
     }
 
     @Override
-    public String toXML() {
+    public String writeXML() {
         //TODO
         return null;
     }

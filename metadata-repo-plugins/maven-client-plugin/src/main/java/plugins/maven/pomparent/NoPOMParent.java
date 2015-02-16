@@ -61,7 +61,7 @@ public class NoPOMParent implements POMParent {
     }
 
     @Override
-    public String toXML() {
+    public String writeXML() {
         throw new UnsupportedOperationException();
     }
 

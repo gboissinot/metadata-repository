@@ -171,7 +171,7 @@ public class POMDeserializerTest {
                 "  </dependencies>\n" +
                 "</project>";
         POMArtifact pomArtifact = pomBuilder.buildFromXML(content, pomContext);
-        String resultContent = pomArtifact.toXML();
+        String resultContent = pomArtifact.writeXML();
         assertEquals(content, resultContent);
     }
 }

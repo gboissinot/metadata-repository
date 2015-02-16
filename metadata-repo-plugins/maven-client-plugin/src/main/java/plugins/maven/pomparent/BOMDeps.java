@@ -16,7 +16,7 @@ public class BOMDeps extends AbstractPOMParent {
 
 
     @Override
-    public String toXML() {
+    public String writeXML() {
         //TODO
         return null;
     }

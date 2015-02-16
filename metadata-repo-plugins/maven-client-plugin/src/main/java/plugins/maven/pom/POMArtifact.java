@@ -57,7 +57,7 @@ public class POMArtifact implements POM {
     }
 
     @Override
-    public String toXML() {
+    public String writeXML() {
         POMArtifactStruct pomArtifactStruct = buildPOMStruct();
         return pomArtifactStruct.toXML();
     }

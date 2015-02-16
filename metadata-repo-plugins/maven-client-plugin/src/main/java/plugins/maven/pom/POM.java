@@ -16,5 +16,5 @@ public interface POM extends MavenArtifact {
 
     List<POMDependency> getDependencies();
 
-    String toXML();
+    String writeXML();
 }

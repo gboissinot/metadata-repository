@@ -11,7 +11,7 @@ public class SimplePOMParent extends AbstractPOMParent {
     }
 
     @Override
-    public String toXML() {
+    public String writeXML() {
         throw new UnsupportedOperationException();
     }
 }
