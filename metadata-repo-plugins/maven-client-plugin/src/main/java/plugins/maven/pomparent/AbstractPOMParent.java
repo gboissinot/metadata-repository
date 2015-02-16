@@ -77,4 +77,14 @@ abstract class AbstractPOMParent implements POMParent {
         //We don't support dependencies in Parent
         return Collections.EMPTY_LIST;
     }
+
+    @Override
+    public String getClassifier() {
+        return null;
+    }
+
+    @Override
+    public String getType() {
+        return "pom";
+    }
 }

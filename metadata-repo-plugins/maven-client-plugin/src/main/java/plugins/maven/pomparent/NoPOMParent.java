@@ -46,6 +46,16 @@ public class NoPOMParent implements POMParent {
     }
 
     @Override
+    public String getClassifier() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String getType() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public List<POMDependency> getDependencies() {
         throw new UnsupportedOperationException();
     }
