@@ -1,9 +1,10 @@
 package plugins.maven.type;
 
+import metadatarepo.core.moduleId.ModuleId;
 import metadatarepo.core.version.deps.strategy.DependencyVersionStrategy;
 import metadatarepo.core.version.deps.strategy.latest.LatestOrForcedDependencyVersionStrategy;
-import plugins.maven.pomparent.POMParent;
-import plugins.maven.pomparent.POMParentFactory;
+import plugins.maven.pom.POMArtifact;
+import plugins.maven.pomparent.version.ParentVersion;
 
 /**
  * @author Gregory Boissinot
@@ -25,7 +26,15 @@ class GradleClientType extends AbstractMavenClientType {
     }
 
     @Override
-    public POMParent getLatestDependencyBOM() {
-        return POMParentFactory.noParent();
+    public ParentVersion getLatestBOMVersion() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public POMArtifact generatePOM(ModuleId moduleId) {
+        return new POMArtifact(
+                moduleId.getOrg(), moduleId.getName(), getPOMVersion(moduleId),
+                getPOMMavenDependencies(getDependencyVersionStrategy(), moduleId)
+        );
     }
 }

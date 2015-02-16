@@ -8,6 +8,7 @@ import plugins.maven.pom.POMArtifact;
 import plugins.maven.pom.POMBuilder;
 import plugins.maven.pom.POMContext;
 import plugins.maven.pom.POMDependency;
+import plugins.maven.pomparent.version.ParentVersion;
 import plugins.maven.pomparent.version.ParentVersionFactory;
 
 import java.util.ArrayList;
@@ -33,33 +34,28 @@ public class POMSerializerTest {
         pomVersion = VersionFactory.get(POM_VERSION);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void nullParent() {
-        final POMArtifact pomArtifact = new POMArtifact(null, POM_GROUPID, POM_ARTIFACTID, pomVersion);
-        pomArtifact.writeXML();
-    }
 
     @Test(expected = IllegalArgumentException.class)
     public void nullGroupId() {
-        final POMArtifact pomArtifact = new POMArtifact(POMParentFactory.noParent(), null, POM_ARTIFACTID, pomVersion);
+        final POMArtifact pomArtifact = new POMArtifact( null, POM_ARTIFACTID, pomVersion);
         pomArtifact.writeXML();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNullArtifactId() {
-        final POMArtifact pomArtifact = new POMArtifact(POMParentFactory.noParent(), POM_GROUPID, null, pomVersion);
+        final POMArtifact pomArtifact = new POMArtifact( POM_GROUPID, null, pomVersion);
         pomArtifact.writeXML();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void nullVersion() {
-        final POMArtifact pomArtifact = new POMArtifact(POMParentFactory.noParent(), POM_GROUPID, POM_ARTIFACTID, null);
+        final POMArtifact pomArtifact = new POMArtifact(POM_GROUPID, POM_ARTIFACTID, null);
         pomArtifact.writeXML();
     }
 
     @Test
     public void minimalPOM() {
-        final POMArtifact pomArtifact = new POMArtifact(POMParentFactory.noParent(), POM_GROUPID, POM_ARTIFACTID, pomVersion);
+        final POMArtifact pomArtifact = new POMArtifact( POM_GROUPID, POM_ARTIFACTID, pomVersion);
         String actualContent = pomArtifact.writeXML();
         String expectedContent = "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n" +
                 "  <modelVersion>4.0.0</modelVersion>\n" +
@@ -73,7 +69,7 @@ public class POMSerializerTest {
     @Test
     public void minimalPOMWithBOMDepsParent() {
         final POMArtifact pomArtifact = new POMArtifact(
-                new BOMDeps(ParentVersionFactory.parentVersionWithGivenVersionValue(POM_PARENT_VERSION)),
+                BOMLatestDeps.BOM_DEPS_GROUP_ID,   BOMLatestDeps.BOM_DEPS_ARTIFACT_ID  , ParentVersionFactory.parentVersionWithGivenVersionValue(POM_PARENT_VERSION),
                 POM_GROUPID,
                 POM_ARTIFACTID,
                 pomVersion);
@@ -81,8 +77,8 @@ public class POMSerializerTest {
         String expectedContent = "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n" +
                 "  <modelVersion>4.0.0</modelVersion>\n" +
                 "  <parent>\n" +
-                "    <groupId>" + BOMDeps.BOM_DEPS_GROUP_ID + "</groupId>\n" +
-                "    <artifactId>" + BOMDeps.BOM_DEPS_ARTIFACT_ID + "</artifactId>\n" +
+                "    <groupId>" + BOMLatestDeps.BOM_DEPS_GROUP_ID + "</groupId>\n" +
+                "    <artifactId>" + BOMLatestDeps.BOM_DEPS_ARTIFACT_ID + "</artifactId>\n" +
                 "    <version>" + POM_PARENT_VERSION + "</version>\n" +
                 "  </parent>\n" +
                 "  <groupId>" + POM_GROUPID + "</groupId>\n" +
@@ -95,7 +91,7 @@ public class POMSerializerTest {
     @Test
     public void minimalPOMWithBOMbuildParent() {
         final POMArtifact pomArtifact = new POMArtifact(
-                new BOMBuild(ParentVersionFactory.parentVersionWithGivenVersionValue(POM_PARENT_VERSION)),
+                BOMBuild.BOM_BUILD_GROUP_ID,   BOMBuild.BOM_BUILD_ARTIFACT_ID  , ParentVersionFactory.parentVersionWithGivenVersionValue(POM_PARENT_VERSION),
                 POM_GROUPID, POM_ARTIFACTID, pomVersion);
         String actualContent = pomArtifact.writeXML();
         String expectedContent = "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n" +
@@ -116,7 +112,7 @@ public class POMSerializerTest {
     public void pomWithOneDep() {
         List<POMDependency> dependencies = new ArrayList<>();
         dependencies.add(new POMDependency("junit", "junit", VersionFactory.get("4.8.1")));
-        final POMArtifact pomArtifact = new POMArtifact(POMParentFactory.noParent(), POM_GROUPID, POM_ARTIFACTID, pomVersion, dependencies);
+        final POMArtifact pomArtifact = new POMArtifact( POM_GROUPID, POM_ARTIFACTID, pomVersion, dependencies);
         String actualContent = pomArtifact.writeXML();
         String expectedContent = "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n" +
                 "  <modelVersion>4.0.0</modelVersion>\n" +
@@ -139,7 +135,7 @@ public class POMSerializerTest {
         List<POMDependency> dependencies = new ArrayList<>();
         dependencies.add(new POMDependency("junit", "junit", VersionFactory.get("4.8.1")));
         dependencies.add(new POMDependency("log4j", "log4j", VersionFactory.get("1.2.14")));
-        final POMArtifact pomArtifact = new POMArtifact(POMParentFactory.noParent(), POM_GROUPID, POM_ARTIFACTID, pomVersion, dependencies);
+        final POMArtifact pomArtifact = new POMArtifact(POM_GROUPID, POM_ARTIFACTID, pomVersion, dependencies);
         String actualContent = pomArtifact.writeXML();
         String expectedContent = "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n" +
                 "  <modelVersion>4.0.0</modelVersion>\n" +
@@ -167,7 +163,7 @@ public class POMSerializerTest {
         List<POMDependency> dependencies = new ArrayList<>();
         dependencies.add(new POMDependency("junit", "junit", VersionFactory.get("4.8.1"), "sources", "jar"));
         dependencies.add(new POMDependency("log4j", "log4j", VersionFactory.get("1.2.14")));
-        final POMArtifact pomArtifact = new POMArtifact(POMParentFactory.noParent(), POM_GROUPID, POM_ARTIFACTID, pomVersion, dependencies);
+        final POMArtifact pomArtifact = new POMArtifact(POM_GROUPID, POM_ARTIFACTID, pomVersion, dependencies);
         String actualContent = pomArtifact.writeXML();
         String expectedContent = "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n" +
                 "  <modelVersion>4.0.0</modelVersion>\n" +
@@ -198,7 +194,7 @@ public class POMSerializerTest {
         List<POMDependency> inputDependencies = new ArrayList<>();
         inputDependencies.add(new POMDependency("junit", "junit", VersionFactory.get("4.8.1"), "sources", "jar"));
         inputDependencies.add(new POMDependency("log4j", "log4j", VersionFactory.get("1.2.14")));
-        final POMArtifact inputPOMArtifact = new POMArtifact(POMParentFactory.noParent(), POM_GROUPID, POM_ARTIFACTID, pomVersion, inputDependencies);
+        final POMArtifact inputPOMArtifact = new POMArtifact(POM_GROUPID, POM_ARTIFACTID, pomVersion, inputDependencies);
 
         String pomContent = inputPOMArtifact.writeXML();
         POMBuilder pomBuilder = new POMBuilder();
@@ -219,6 +215,4 @@ public class POMSerializerTest {
             assertEquals(inputDependency.getVersion().getValue(), resultDependency.getVersion().getValue());
         }
     }
-
-
 }

@@ -10,6 +10,7 @@ import metadatarepo.core.version.VersionFactory;
 import metadatarepo.core.version.deps.strategy.DependencyVersionStrategy;
 import plugins.maven.pom.POMArtifact;
 import plugins.maven.pom.POMDependency;
+import plugins.maven.pomparent.BOMLatestDeps;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,22 +26,18 @@ abstract class AbstractMavenClientType implements MavenClientType {
     @Override
     public POMArtifact generatePOM(ModuleId moduleId) {
         return new POMArtifact(
-                getLatestDependencyBOM(),
-                moduleId.getOrg(),
-                moduleId.getName(),
-                getPOMVerison(moduleId),
-                getPOMMavenDependencies(
-                        getDependencyVersionStrategy(),
-                        moduleId)
+                BOMLatestDeps.BOM_DEPS_GROUP_ID, BOMLatestDeps.BOM_DEPS_ARTIFACT_ID, getLatestBOMVersion(),
+                moduleId.getOrg(), moduleId.getName(), getPOMVersion(moduleId),
+                getPOMMavenDependencies(getDependencyVersionStrategy(), moduleId)
         );
     }
 
-    private Version getPOMVerison(ModuleId moduleId) {
+    protected Version getPOMVersion(ModuleId moduleId) {
         POMVersionEngine pomVersionEngine = new POMVersionEngine();
         return pomVersionEngine.buildMavenPOMVersion(moduleId);
     }
 
-    private List<POMDependency> getPOMMavenDependencies(DependencyVersionStrategy versionStrategy, ModuleId moduleId) {
+    protected List<POMDependency> getPOMMavenDependencies(DependencyVersionStrategy versionStrategy, ModuleId moduleId) {
         List<POMDependency> mavenPOMDependencies = new ArrayList<POMDependency>();
         List<BuildDependency> exportedDependencies = moduleExportService.getBuildDependencies(
                 versionStrategy, moduleId);

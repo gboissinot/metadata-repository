@@ -4,8 +4,6 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.mapper.MapperWrapper;
 
-import static plugins.maven.pom.POMArtifact.POMArtifactStruct;
-
 /**
  * @author Gregory Boissinot
  */
@@ -40,6 +38,7 @@ public class POMBuilder {
         };
         xstream.alias("project", POMArtifactStruct.class);
         xstream.alias("dependency", POMArtifactStruct.MavenPOMDependencyStruct.class);
+        xstream.alias("profile", POMArtifactStruct.MavenPOMProfile.class);
         try {
             return (POMArtifactStruct) xstream.fromXML(mavenPOMContent);
         } catch (Throwable e) {
