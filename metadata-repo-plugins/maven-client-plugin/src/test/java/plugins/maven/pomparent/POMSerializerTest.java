@@ -5,6 +5,8 @@ import metadatarepo.core.version.VersionFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import plugins.maven.pom.POMArtifact;
+import plugins.maven.pom.POMBuilder;
+import plugins.maven.pom.POMContext;
 import plugins.maven.pom.POMDependency;
 import plugins.maven.pomparent.version.ParentVersionFactory;
 
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Gregory Boissinot
@@ -188,5 +191,34 @@ public class POMSerializerTest {
                 "</project>";
         assertEquals(expectedContent, actualContent);
     }
+
+
+    @Test
+    public void serializeAndDeserialize() {
+        List<POMDependency> inputDependencies = new ArrayList<>();
+        inputDependencies.add(new POMDependency("junit", "junit", VersionFactory.get("4.8.1"), "sources", "jar"));
+        inputDependencies.add(new POMDependency("log4j", "log4j", VersionFactory.get("1.2.14")));
+        final POMArtifact inputPOMArtifact = new POMArtifact(POMParentFactory.noParent(), POM_GROUPID, POM_ARTIFACTID, pomVersion, inputDependencies);
+
+        String pomContent = inputPOMArtifact.toXML();
+        POMBuilder pomBuilder = new POMBuilder();
+        POMArtifact pomArtifact1 = pomBuilder.buildFromXML(pomContent, new POMContext(POM_GROUPID, POM_ARTIFACTID, POM_VERSION));
+
+        assertEquals(inputPOMArtifact.getGroupId(), pomArtifact1.getGroupId());
+        assertEquals(inputPOMArtifact.getArtifactId(), pomArtifact1.getArtifactId());
+        assertEquals(inputPOMArtifact.getVersion().getValue(), pomArtifact1.getVersion().getValue());
+        List<POMDependency> resultDependencies = inputPOMArtifact.getDependencies();
+        assertNotNull(resultDependencies);
+        assertEquals(inputDependencies.size(), resultDependencies.size());
+
+        for (int k = 0; k < resultDependencies.size(); k++) {
+            POMDependency resultDependency = resultDependencies.get(k);
+            POMDependency inputDependency = inputDependencies.get(k);
+            assertEquals(inputDependency.getGroupId(), resultDependency.getGroupId());
+            assertEquals(inputDependency.getArtifactId(), resultDependency.getArtifactId());
+            assertEquals(inputDependency.getVersion().getValue(), resultDependency.getVersion().getValue());
+        }
+    }
+
 
 }

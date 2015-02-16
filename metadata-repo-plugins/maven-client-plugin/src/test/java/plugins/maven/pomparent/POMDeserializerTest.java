@@ -33,10 +33,10 @@ public class POMDeserializerTest {
                 "  <artifactId>" + POM_ARTIFACTID + "</artifactId>\n" +
                 "  <version>" + POM_VERSION + "</version>\n" +
                 "</project>";
-        POMArtifact POMArtifact = pomBuilder.buildFromXML(actualContent, pomContext);
-        assertEquals(POM_GROUPID, POMArtifact.getGroupId());
-        assertEquals(POM_ARTIFACTID, POMArtifact.getArtifactId());
-        assertEquals(POM_VERSION, POMArtifact.getVersion().getValue());
+        POMArtifact pomArtifact = pomBuilder.buildFromXML(actualContent, pomContext);
+        assertEquals(POM_GROUPID, pomArtifact.getGroupId());
+        assertEquals(POM_ARTIFACTID, pomArtifact.getArtifactId());
+        assertEquals(POM_VERSION, pomArtifact.getVersion().getValue());
     }
 
     @Test(expected = ConversionExcetion.class)
@@ -56,10 +56,10 @@ public class POMDeserializerTest {
                 "  <groupId>" + POM_GROUPID + "</groupId>\n" +
                 "  <artifactId>" + POM_ARTIFACTID + "</artifactId>\n" +
                 "</project>";
-        POMArtifact POMArtifact = pomBuilder.buildFromXML(actualContent, pomContext);
-        assertEquals(POM_GROUPID, POMArtifact.getGroupId());
-        assertEquals(POM_ARTIFACTID, POMArtifact.getArtifactId());
-        assertEquals(POM_VERSION, POMArtifact.getVersion().getValue());
+        POMArtifact pomArtifact = pomBuilder.buildFromXML(actualContent, pomContext);
+        assertEquals(POM_GROUPID, pomArtifact.getGroupId());
+        assertEquals(POM_ARTIFACTID, pomArtifact.getArtifactId());
+        assertEquals(POM_VERSION, pomArtifact.getVersion().getValue());
     }
 
     @Test
@@ -89,11 +89,11 @@ public class POMDeserializerTest {
                 "    </dependency>\n" +
                 "  </dependencies>\n" +
                 "</project>";
-        POMArtifact POMArtifact = pomBuilder.buildFromXML(actualContent, pomContext);
-        assertEquals(POM_GROUPID, POMArtifact.getGroupId());
-        assertEquals(POM_ARTIFACTID, POMArtifact.getArtifactId());
-        assertEquals(POM_VERSION, POMArtifact.getVersion().getValue());
-        List<POMDependency> dependencies = POMArtifact.getDependencies();
+        POMArtifact pomArtifact = pomBuilder.buildFromXML(actualContent, pomContext);
+        assertEquals(POM_GROUPID, pomArtifact.getGroupId());
+        assertEquals(POM_ARTIFACTID, pomArtifact.getArtifactId());
+        assertEquals(POM_VERSION, pomArtifact.getVersion().getValue());
+        List<POMDependency> dependencies = pomArtifact.getDependencies();
         assertNotNull(dependencies);
         assertEquals(1, dependencies.size());
         for (POMDependency dependency : dependencies) {
@@ -125,11 +125,11 @@ public class POMDeserializerTest {
                 "    </dependency>\n" +
                 "  </dependencies>\n" +
                 "</project>";
-        POMArtifact POMArtifact = pomBuilder.buildFromXML(actualContent, pomContext);
-        assertEquals(POM_GROUPID, POMArtifact.getGroupId());
-        assertEquals(POM_ARTIFACTID, POMArtifact.getArtifactId());
-        assertEquals(POM_VERSION, POMArtifact.getVersion().getValue());
-        List<POMDependency> dependencies = POMArtifact.getDependencies();
+        POMArtifact pomArtifact = pomBuilder.buildFromXML(actualContent, pomContext);
+        assertEquals(POM_GROUPID, pomArtifact.getGroupId());
+        assertEquals(POM_ARTIFACTID, pomArtifact.getArtifactId());
+        assertEquals(POM_VERSION, pomArtifact.getVersion().getValue());
+        List<POMDependency> dependencies = pomArtifact.getDependencies();
         assertNotNull(dependencies);
         assertEquals(2, dependencies.size());
 
@@ -146,5 +146,32 @@ public class POMDeserializerTest {
         assertEquals("1.2.14", pomDependency2.getVersion().getValue());
         assertNull(pomDependency2.getClassifier());
         assertNull(pomDependency2.getType());
+    }
+
+    @Test
+    public void deserializationAndSerialization() {
+        String content = "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n" +
+                "  <modelVersion>4.0.0</modelVersion>\n" +
+                "  <groupId>" + POM_GROUPID + "</groupId>\n" +
+                "  <artifactId>" + POM_ARTIFACTID + "</artifactId>\n" +
+                "  <version>" + POM_VERSION + "</version>\n" +
+                "  <dependencies>\n" +
+                "    <dependency>\n" +
+                "      <groupId>junit</groupId>\n" +
+                "      <artifactId>junit</artifactId>\n" +
+                "      <version>4.8.1</version>\n" +
+                "      <classifier>sources</classifier>\n" +
+                "      <type>jar</type>\n" +
+                "    </dependency>\n" +
+                "    <dependency>\n" +
+                "      <groupId>log4j</groupId>\n" +
+                "      <artifactId>log4j</artifactId>\n" +
+                "      <version>1.2.14</version>\n" +
+                "    </dependency>\n" +
+                "  </dependencies>\n" +
+                "</project>";
+        POMArtifact pomArtifact = pomBuilder.buildFromXML(content, pomContext);
+        String resultContent = pomArtifact.toXML();
+        assertEquals(content, resultContent);
     }
 }
