@@ -62,18 +62,6 @@ public class POMArtifact implements POM {
         return pomArtifactStruct.toXML();
     }
 
-    public POMArtifact fromXML(String mavenPOMContent, POMContext pomContext) {
-        if (mavenPOMContent == null) {
-            throw new IllegalArgumentException("You must provide a maven POM content in XML");
-        }
-        if (pomContext == null) {
-            throw new IllegalArgumentException("You must provide additional information through a context for building a Maven POM object graph.");
-        }
-
-        POMArtifactStruct pomArtifactStruct = deserialize(mavenPOMContent);
-        return pomArtifactStruct.fromXML(pomContext);
-    }
-
     private POMArtifactStruct deserialize(String mavenPOMContent) {
         XStream xstream = new XStream(new DomDriver("UTF-8"));
         xstream.alias("project", POMArtifactStruct.class);
@@ -108,6 +96,16 @@ public class POMArtifact implements POM {
     @Override
     public Version getVersion() {
         return version;
+    }
+
+    @Override
+    public String getClassifier() {
+        return null;
+    }
+
+    @Override
+    public String getType() {
+        return "pom";
     }
 
     @Override
