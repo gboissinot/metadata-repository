@@ -2,7 +2,11 @@ package plugins.maven.pomparent;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import plugins.maven.pom.*;
+import plugins.maven.MavenArtifactRequest;
+import plugins.maven.pom.ConversionExcetion;
+import plugins.maven.pom.POMArtifact;
+import plugins.maven.pom.POMBuilderService;
+import plugins.maven.pom.POMDependency;
 
 import java.util.List;
 
@@ -17,13 +21,13 @@ public class POMDeserializerTest {
     private static final String POM_ARTIFACTID = "tesArtifactId";
     private static final String POM_VERSION = "1.0";
 
-    private static POMContext pomContext;
-    private static POMBuilder pomBuilder;
+    private static MavenArtifactRequest mavenArtifactRequest;
+    private static POMBuilderService pomBuilder;
 
     @BeforeClass
     public static void setup() {
-        pomBuilder = new POMBuilder();
-        pomContext = new POMContext(POM_GROUPID, POM_ARTIFACTID, POM_VERSION);
+        pomBuilder = new POMBuilderService();
+        mavenArtifactRequest = new MavenArtifactRequest(POM_GROUPID, POM_ARTIFACTID, POM_VERSION);
     }
 
     @Test
@@ -33,7 +37,7 @@ public class POMDeserializerTest {
                 "  <artifactId>" + POM_ARTIFACTID + "</artifactId>\n" +
                 "  <version>" + POM_VERSION + "</version>\n" +
                 "</project>";
-        POMArtifact pomArtifact = pomBuilder.buildFromXML(actualContent, pomContext);
+        POMArtifact pomArtifact = pomBuilder.buildFromXML(new StubMavenClientType(), mavenArtifactRequest, actualContent);
         assertEquals(POM_GROUPID, pomArtifact.getGroupId());
         assertEquals(POM_ARTIFACTID, pomArtifact.getArtifactId());
         assertEquals(POM_VERSION, pomArtifact.getVersion().getValue());
@@ -46,7 +50,7 @@ public class POMDeserializerTest {
                 "  <groupId>" + POM_GROUPID + "</groupId>\n" +
                 "  <version>" + POM_VERSION + "</version>\n" +
                 "</project>";
-        pomBuilder.buildFromXML(actualContent, pomContext);
+        pomBuilder.buildFromXML(new StubMavenClientType(), mavenArtifactRequest, actualContent);
     }
 
     @Test
@@ -56,7 +60,7 @@ public class POMDeserializerTest {
                 "  <groupId>" + POM_GROUPID + "</groupId>\n" +
                 "  <artifactId>" + POM_ARTIFACTID + "</artifactId>\n" +
                 "</project>";
-        POMArtifact pomArtifact = pomBuilder.buildFromXML(actualContent, pomContext);
+        POMArtifact pomArtifact = pomBuilder.buildFromXML(new StubMavenClientType(), mavenArtifactRequest, actualContent);
         assertEquals(POM_GROUPID, pomArtifact.getGroupId());
         assertEquals(POM_ARTIFACTID, pomArtifact.getArtifactId());
         assertEquals(POM_VERSION, pomArtifact.getVersion().getValue());
@@ -70,7 +74,7 @@ public class POMDeserializerTest {
                 "  <version>" + POM_VERSION + "</version>\n" +
                 "  <unknown>" + POM_ARTIFACTID + "</unknown>\n" +
                 "</project>";
-        pomBuilder.buildFromXML(actualContent, pomContext);
+        pomBuilder.buildFromXML(new StubMavenClientType(), mavenArtifactRequest, actualContent);
         assertTrue(true);
     }
 
@@ -89,7 +93,7 @@ public class POMDeserializerTest {
                 "    </dependency>\n" +
                 "  </dependencies>\n" +
                 "</project>";
-        POMArtifact pomArtifact = pomBuilder.buildFromXML(actualContent, pomContext);
+        POMArtifact pomArtifact = pomBuilder.buildFromXML(new StubMavenClientType(), mavenArtifactRequest, actualContent);
         assertEquals(POM_GROUPID, pomArtifact.getGroupId());
         assertEquals(POM_ARTIFACTID, pomArtifact.getArtifactId());
         assertEquals(POM_VERSION, pomArtifact.getVersion().getValue());
@@ -125,7 +129,7 @@ public class POMDeserializerTest {
                 "    </dependency>\n" +
                 "  </dependencies>\n" +
                 "</project>";
-        POMArtifact pomArtifact = pomBuilder.buildFromXML(actualContent, pomContext);
+        POMArtifact pomArtifact = pomBuilder.buildFromXML(new StubMavenClientType(), mavenArtifactRequest, actualContent);
         assertEquals(POM_GROUPID, pomArtifact.getGroupId());
         assertEquals(POM_ARTIFACTID, pomArtifact.getArtifactId());
         assertEquals(POM_VERSION, pomArtifact.getVersion().getValue());
@@ -150,7 +154,7 @@ public class POMDeserializerTest {
 
     @Test
     public void deserializationAndSerialization() {
-        String content = "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n" +
+        String actualContent = "<project xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n" +
                 "  <modelVersion>4.0.0</modelVersion>\n" +
                 "  <groupId>" + POM_GROUPID + "</groupId>\n" +
                 "  <artifactId>" + POM_ARTIFACTID + "</artifactId>\n" +
@@ -170,8 +174,10 @@ public class POMDeserializerTest {
                 "    </dependency>\n" +
                 "  </dependencies>\n" +
                 "</project>";
-        POMArtifact pomArtifact = pomBuilder.buildFromXML(content, pomContext);
+        POMArtifact pomArtifact = pomBuilder.buildFromXML(new StubMavenClientType(), mavenArtifactRequest, actualContent);
         String resultContent = pomArtifact.writeXML();
-        assertEquals(content, resultContent);
+        assertEquals(actualContent, resultContent);
     }
+
+    //TODO TEST WITH PARENT
 }

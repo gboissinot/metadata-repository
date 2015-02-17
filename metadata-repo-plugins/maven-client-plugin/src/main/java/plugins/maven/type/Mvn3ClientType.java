@@ -8,7 +8,7 @@ import plugins.maven.pomparent.version.ParentVersionFactory;
 /**
  * @author Gregory Boissinot
  */
-class Mvn3ClientType extends AbstractMavenClientType {
+class Mvn3ClientType implements MavenClientType {
 
     private static Mvn3ClientType instance = new Mvn3ClientType();
 
@@ -27,5 +27,18 @@ class Mvn3ClientType extends AbstractMavenClientType {
     @Override
     public ParentVersion getLatestBOMVersion() {
         return ParentVersionFactory.parentVersionWithWideRange();
+    }
+
+    @Override
+    public ParentVersion fixParentVersion(String version) {
+        //is a range
+        if (isLatestKeyword(version)) {
+            return getLatestBOMVersion();
+        }
+        return ParentVersionFactory.parentVersionWithGivenVersionValue(version);
+    }
+
+    private boolean isLatestKeyword(String version) {
+        return "RELEASE".equals(version) || "LATEST".equals(version);
     }
 }

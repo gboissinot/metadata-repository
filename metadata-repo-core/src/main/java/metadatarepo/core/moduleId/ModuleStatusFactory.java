@@ -5,6 +5,8 @@ package metadatarepo.core.moduleId;
  */
 class ModuleStatusFactory {
 
+
+    // CAN BE NULL
     public static ModuleStatus get(String statusValue) {
         //TODO
         return null;

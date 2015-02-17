@@ -5,7 +5,7 @@ package plugins.maven;
  */
 public class MavenArtifactFactory {
 
-    public static MavenArtifact build(String mavenURL) {
+    public static MavenArtifactRequest build(String mavenURL) {
         //group1/group2/artifactId/version/artifactId-version.text
 
 

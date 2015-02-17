@@ -3,7 +3,7 @@ package metadatarepo.core.moduleId;
 /**
  * @author Gregory Boissinot
  */
-class NoModuleStatus implements ModuleStatus {
+public class NoModuleStatus implements ModuleStatus {
 
     @Override
     public void promote() {

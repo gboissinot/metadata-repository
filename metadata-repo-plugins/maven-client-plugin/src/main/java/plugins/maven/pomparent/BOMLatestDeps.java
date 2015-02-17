@@ -14,7 +14,6 @@ public class BOMLatestDeps extends AbstractPOMParent {
         super(BOM_DEPS_GROUP_ID, BOM_DEPS_ARTIFACT_ID, version);
     }
 
-
     @Override
     public String writeXML() {
         //TODO

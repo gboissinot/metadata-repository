@@ -1,12 +1,6 @@
 package plugins.maven.pomparent;
 
-import metadatarepo.core.version.Version;
-import metadatarepo.core.version.VersionFactory;
-import plugins.maven.pom.POMDependency;
 import plugins.maven.pomparent.version.ParentVersion;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Gregory Boissinot
@@ -53,38 +47,5 @@ abstract class AbstractPOMParent implements POMParent {
     @Override
     public ParentVersion getParentVersion() {
         return version;
-    }
-
-    @Override
-    public boolean hasParent() {
-        //We support only one hierarchy
-        return false;
-    }
-
-    @Override
-    public POMParent getParent() {
-        //We support only one hierarchy
-        return POMParentFactory.noParent();
-    }
-
-    @Override
-    public Version getVersion() {
-        return VersionFactory.get(version.getValue());
-    }
-
-    @Override
-    public List<POMDependency> getDependencies() {
-        //We don't support dependencies in Parent
-        return Collections.EMPTY_LIST;
-    }
-
-    @Override
-    public String getClassifier() {
-        return null;
-    }
-
-    @Override
-    public String getType() {
-        return "pom";
     }
 }

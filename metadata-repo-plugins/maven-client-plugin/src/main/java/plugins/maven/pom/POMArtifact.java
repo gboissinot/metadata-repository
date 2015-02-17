@@ -71,6 +71,26 @@ public class POMArtifact implements POM {
         }
     }
 
+    public POMParent getParent() {
+        return parent;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public String getArtifactId() {
+        return artifactId;
+    }
+
+    public Version getVersion() {
+        return version;
+    }
+
+    public List<POMDependency> getDependencies() {
+        return Collections.unmodifiableList(dependencies);
+    }
+
     @Override
     public String writeXML() {
         POMArtifactStruct pomArtifactStruct = buildPOMStruct();
@@ -88,50 +108,14 @@ public class POMArtifact implements POM {
         }
     }
 
-    @Override
-    public boolean hasParent() {
+    private boolean hasParent() {
         return !(parent instanceof NoPOMParent);
-    }
-
-    @Override
-    public POMParent getParent() {
-        return parent;
-    }
-
-    @Override
-    public String getGroupId() {
-        return groupId;
-    }
-
-    @Override
-    public String getArtifactId() {
-        return artifactId;
-    }
-
-    @Override
-    public Version getVersion() {
-        return version;
-    }
-
-    @Override
-    public String getClassifier() {
-        return null;
-    }
-
-    @Override
-    public String getType() {
-        return "pom";
-    }
-
-    @Override
-    public List<POMDependency> getDependencies() {
-        return Collections.unmodifiableList(dependencies);
     }
 
     private POMArtifactStruct buildPOMStruct() {
         POMArtifactStruct struct = new POMArtifactStruct();
-        struct.groupId = getGroupId();
-        struct.artifactId = getArtifactId();
+        struct.groupId = this.groupId;
+        struct.artifactId = this.artifactId;
         buildVersionStruct(struct);
         buildParentStruct(struct);
         buildDependenciesStruct(struct);
@@ -140,7 +124,7 @@ public class POMArtifact implements POM {
 
     private void buildVersionStruct(POMArtifactStruct struct) {
         assert struct != null;
-        Version version = getVersion();
+        Version version = this.version;
         if (version instanceof NoVersion) {
             return;
         }
@@ -150,8 +134,8 @@ public class POMArtifact implements POM {
     private void buildParentStruct(POMArtifactStruct struct) {
         assert struct != null;
         if (this.hasParent()) {
-            POMParent parent = getParent();
-            struct.parent = new plugins.maven.pom.POMArtifactStruct.MavenPOMParentStuct();
+            POMParent parent = this.parent;
+            struct.parent = new POMArtifactStruct.MavenPOMParentStuct();
             struct.parent.groupId = parent.getGroupId();
             struct.parent.artifactId = parent.getArtifactId();
             struct.parent.version = parent.getParentVersion().getValue();
@@ -160,7 +144,7 @@ public class POMArtifact implements POM {
 
     private void buildDependenciesStruct(POMArtifactStruct struct) {
         assert struct != null;
-        List<POMDependency> dependencies = getDependencies();
+        List<POMDependency> dependencies = this.dependencies;
         if (dependencies == null || dependencies.isEmpty()) {
             return;
         }
