@@ -3,7 +3,7 @@ package plugins.maven.pomparent.version;
 /**
  * @author Gregory Boissinot
  */
-public interface ParentVersion {
+public interface POMParentVersion {
 
     /**
      * Gets the Maven parent version.

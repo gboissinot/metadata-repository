@@ -1,7 +1,7 @@
 package plugins.maven.pomparent;
 
 import metadatarepo.core.version.deps.strategy.DependencyVersionStrategy;
-import plugins.maven.pomparent.version.ParentVersion;
+import plugins.maven.pomparent.version.POMParentVersion;
 import plugins.maven.type.MavenClientType;
 
 /**
@@ -14,12 +14,12 @@ public class StubMavenClientType implements MavenClientType {
     }
 
     @Override
-    public ParentVersion getLatestBOMVersion() {
+    public POMParentVersion getLatestBOMVersion() {
         return null;
     }
 
     @Override
-    public ParentVersion fixParentVersion(String version) {
+    public POMParentVersion fixParentVersion(String version) {
         return null;
     }
 }

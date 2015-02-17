@@ -2,7 +2,7 @@ package plugins.maven.type;
 
 import metadatarepo.core.version.deps.strategy.DependencyVersionStrategy;
 import metadatarepo.core.version.deps.strategy.latest.LatestOrForcedDependencyVersionStrategy;
-import plugins.maven.pomparent.version.ParentVersion;
+import plugins.maven.pomparent.version.POMParentVersion;
 
 /**
  * @author Gregory Boissinot
@@ -24,12 +24,12 @@ class GradleClientType implements MavenClientType {
     }
 
     @Override
-    public ParentVersion getLatestBOMVersion() {
+    public POMParentVersion getLatestBOMVersion() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public ParentVersion fixParentVersion(String version) {
+    public POMParentVersion fixParentVersion(String version) {
         throw new UnsupportedOperationException();
     }
 }

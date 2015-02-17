@@ -2,8 +2,8 @@ package plugins.maven.type;
 
 import metadatarepo.core.version.deps.strategy.DependencyVersionStrategy;
 import metadatarepo.core.version.deps.strategy.ForcedVersionIfExistDependencyVersionStrategy;
-import plugins.maven.pomparent.version.ParentVersion;
-import plugins.maven.pomparent.version.ParentVersionFactory;
+import plugins.maven.pomparent.version.POMParentVersion;
+import plugins.maven.pomparent.version.POMParentVersionFactory;
 
 /**
  * @author Gregory Boissinot
@@ -25,17 +25,16 @@ class Mvn3ClientType implements MavenClientType {
     }
 
     @Override
-    public ParentVersion getLatestBOMVersion() {
-        return ParentVersionFactory.parentVersionWithWideRange();
+    public POMParentVersion getLatestBOMVersion() {
+        return POMParentVersionFactory.parentVersionWithWideRange();
     }
 
     @Override
-    public ParentVersion fixParentVersion(String version) {
-        //is a range
+    public POMParentVersion fixParentVersion(String version) {
         if (isLatestKeyword(version)) {
             return getLatestBOMVersion();
         }
-        return ParentVersionFactory.parentVersionWithGivenVersionValue(version);
+        return POMParentVersionFactory.parentVersionWithGivenVersionValue(version);
     }
 
     private boolean isLatestKeyword(String version) {

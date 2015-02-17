@@ -1,6 +1,6 @@
 package plugins.maven.pomparent;
 
-import plugins.maven.pomparent.version.ParentVersion;
+import plugins.maven.pomparent.version.POMParentVersion;
 
 /**
  * @author Gregory Boissinot
@@ -9,16 +9,16 @@ abstract class AbstractPOMParent implements POMParent {
 
     private final String groupId;
     private final String artifactId;
-    private final ParentVersion version;
+    private final POMParentVersion version;
 
-    protected AbstractPOMParent(String groupId, String artifactId, ParentVersion parentVersion) {
+    protected AbstractPOMParent(String groupId, String artifactId, POMParentVersion parentVersion) {
         checkParameters(groupId, artifactId, parentVersion);
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.version = parentVersion;
     }
 
-    private void checkParameters(String groupId, String artifactId, ParentVersion parentVersion) {
+    private void checkParameters(String groupId, String artifactId, POMParentVersion parentVersion) {
         if (groupId == null) {
             throw new IllegalArgumentException("A groupId is required.");
         }
@@ -45,7 +45,7 @@ abstract class AbstractPOMParent implements POMParent {
     }
 
     @Override
-    public ParentVersion getParentVersion() {
+    public POMParentVersion getParentVersion() {
         return version;
     }
 }

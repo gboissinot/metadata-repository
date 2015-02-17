@@ -1,6 +1,6 @@
 package plugins.maven.pomparent;
 
-import plugins.maven.pomparent.version.ParentVersion;
+import plugins.maven.pomparent.version.POMParentVersion;
 
 /**
  * @author Gregory Boissinot
@@ -32,7 +32,7 @@ public class NoPOMParent implements POMParent {
     }
 
     @Override
-    public ParentVersion getParentVersion() {
+    public POMParentVersion getParentVersion() {
         throw new UnsupportedOperationException();
     }
 }

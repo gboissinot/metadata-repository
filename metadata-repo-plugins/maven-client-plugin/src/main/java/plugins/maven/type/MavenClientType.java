@@ -1,7 +1,7 @@
 package plugins.maven.type;
 
 import metadatarepo.core.version.deps.strategy.DependencyVersionStrategy;
-import plugins.maven.pomparent.version.ParentVersion;
+import plugins.maven.pomparent.version.POMParentVersion;
 
 /**
  * @author Gregory Boissinot
@@ -9,7 +9,7 @@ import plugins.maven.pomparent.version.ParentVersion;
 public interface MavenClientType {
     DependencyVersionStrategy getDependencyVersionStrategy();
 
-    ParentVersion getLatestBOMVersion();
+    POMParentVersion getLatestBOMVersion();
 
-    ParentVersion fixParentVersion(String version);
+    POMParentVersion fixParentVersion(String version);
 }

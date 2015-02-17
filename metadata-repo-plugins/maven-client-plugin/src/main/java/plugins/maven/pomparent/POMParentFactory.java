@@ -1,17 +1,17 @@
 package plugins.maven.pomparent;
 
-import plugins.maven.pomparent.version.ParentVersion;
+import plugins.maven.pomparent.version.POMParentVersion;
 
 /**
  * @author Gregory Boissinot
  */
 public class POMParentFactory {
 
-    public static POMParent bomBuild(ParentVersion parentVersion) {
+    public static POMParent bomBuild(POMParentVersion parentVersion) {
         return new BOMBuild(parentVersion);
     }
 
-    public static POMParent bomLatestDeps(ParentVersion parentVersion) {
+    public static POMParent bomLatestDeps(POMParentVersion parentVersion) {
         return new BOMLatestDeps(parentVersion);
     }
 
@@ -20,7 +20,7 @@ public class POMParentFactory {
     }
 
     public static POMParent regularParent(String parentGroupId, String parentArtifactId,
-                                          ParentVersion parentVersion) {
+                                          POMParentVersion parentVersion) {
         return new SimplePOMParent(parentGroupId, parentArtifactId, parentVersion);
     }
 }

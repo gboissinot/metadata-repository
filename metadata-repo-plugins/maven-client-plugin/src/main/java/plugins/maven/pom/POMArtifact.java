@@ -7,7 +7,7 @@ import metadatarepo.core.version.Version;
 import plugins.maven.pomparent.NoPOMParent;
 import plugins.maven.pomparent.POMParent;
 import plugins.maven.pomparent.POMParentFactory;
-import plugins.maven.pomparent.version.ParentVersion;
+import plugins.maven.pomparent.version.POMParentVersion;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,14 +35,14 @@ public class POMArtifact implements POM {
 
     public POMArtifact(String parentGroupId,
                        String parentArtifactId,
-                       ParentVersion parentVersion,
+                       POMParentVersion parentVersion,
                        String groupId, String artifactId, Version version) {
         set(POMParentFactory.regularParent(parentGroupId, parentArtifactId, parentVersion), groupId, artifactId, version);
     }
 
     public POMArtifact(String parentGroupId,
                        String parentArtifactId,
-                       ParentVersion parentVersion,
+                       POMParentVersion parentVersion,
                        String groupId, String artifactId, Version version, List<POMDependency> dependencies) {
         set(POMParentFactory.regularParent(parentGroupId, parentArtifactId, parentVersion), groupId, artifactId, version);
         this.dependencies = (dependencies == null) ? Collections.EMPTY_LIST : dependencies;

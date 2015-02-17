@@ -25,6 +25,8 @@ public class POMBuilderService {
             MavenArtifactRequest mavenArtifactRequest,
             String mavenPOMContent) {
 
+        //TODO manage profiles
+
         POMArtifactStruct pomArtifactStruct = deserialize(mavenPOMContent);
         String groupId = extractGroupId(mavenArtifactRequest, pomArtifactStruct);
         String artifactId = extractArtifactId(pomArtifactStruct);

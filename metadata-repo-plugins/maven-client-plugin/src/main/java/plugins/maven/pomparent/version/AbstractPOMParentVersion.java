@@ -3,11 +3,11 @@ package plugins.maven.pomparent.version;
 /**
  * @author Gregory Boissinot
  */
-public abstract class AbstractParentVersion implements ParentVersion {
+public abstract class AbstractPOMParentVersion implements POMParentVersion {
 
     private String value;
 
-    protected AbstractParentVersion(String parentVersionValue) {
+    protected AbstractPOMParentVersion(String parentVersionValue) {
         if (parentVersionValue == null) {
             throw new IllegalStateException("A parent must have a version.");
         }

@@ -1,12 +1,12 @@
 package plugins.maven.pomparent;
 
-import plugins.maven.pomparent.version.ParentVersion;
+import plugins.maven.pomparent.version.POMParentVersion;
 
 /**
  * @author Gregory Boissinot
  */
 class SimplePOMParent extends AbstractPOMParent {
-    public SimplePOMParent(String groupId, String artifactId, ParentVersion parentVersion) {
+    public SimplePOMParent(String groupId, String artifactId, POMParentVersion parentVersion) {
         super(groupId, artifactId, parentVersion);
     }
 
