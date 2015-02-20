@@ -9,7 +9,7 @@ public class ModuleMetaVersion {
 
     private final Version version;
 
-    private final ModuleStatus status;
+    private ModuleStatus status;
 
     public ModuleMetaVersion(Version version, ModuleStatus status) {
         if (version == null) {
@@ -37,5 +37,17 @@ public class ModuleMetaVersion {
 
     public ModuleStatus getStatus() {
         return status;
+    }
+
+    public void setStatus(ModuleStatus status) {
+        this.status = status;
+    }
+
+    public void promote() {
+        status.promote(this);
+    }
+
+    public void release() {
+        status.release(this);
     }
 }

@@ -5,7 +5,11 @@ package metadatarepo.core.moduleId;
  */
 public interface ModuleStatus {
 
-    void promote();
+    void promote(ModuleMetaVersion moduleMetaVersion);
+
+    void release(ModuleMetaVersion moduleMetaVersion);
 
     String getValue();
+
+    boolean isDefault();
 }

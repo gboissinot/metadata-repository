@@ -1,0 +1,4 @@
+plugins.modulestatus.ReleaseModuleStatus
+plugins.modulestatus.IntegrationModuleStatus
+plugins.modulestatus.BuildModuleStatus
+plugins.modulestatus.DeprecateModuleStatus

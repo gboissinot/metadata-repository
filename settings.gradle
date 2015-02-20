@@ -1,2 +1,3 @@
 include 'metadata-repo-core'
 include 'metadata-repo-plugins/maven-client-plugin'
+include 'metadata-repo-plugins/default-modulestatus-plugin'

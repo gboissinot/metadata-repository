@@ -31,4 +31,19 @@ class DefaultModuleId implements ModuleId {
     public ModuleMetaVersion getMetaVersion() {
         return metaVersion;
     }
+
+    @Override
+    public void promote() {
+        metaVersion.promote();
+    }
+
+    @Override
+    public void release() {
+        metaVersion.release();
+    }
+
+    @Override
+    public void deprecate() {
+
+    }
 }
