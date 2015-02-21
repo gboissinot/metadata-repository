@@ -5,9 +5,9 @@ package metadatarepo.core.moduleId;
  */
 public interface ModuleStatus {
 
-    void promote(ModuleMetaVersion moduleMetaVersion);
+    void promote(ModuleStatusNotifier moduleStatusNotifier);
 
-    void release(ModuleMetaVersion moduleMetaVersion);
+    void release(ModuleStatusNotifier moduleStatusNotifier);
 
     String getValue();
 

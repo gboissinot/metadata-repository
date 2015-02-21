@@ -7,6 +7,13 @@ import metadatarepo.core.version.Version;
  */
 public class ModuleMetaVersion {
 
+    private final ModuleStatusNotifier moduleStatusNotifier = new ModuleStatusNotifier() {
+        @Override
+        public void changeStatus(ModuleStatus moduleStatus) {
+            ModuleMetaVersion.this.setStatus(moduleStatus);
+        }
+    };
+
     private final Version version;
 
     private ModuleStatus status;
@@ -27,7 +34,7 @@ public class ModuleMetaVersion {
     }
 
     /**
-     * Return the module version
+     * Gets the module version
      *
      * @return the @Version object. Never null.
      */
@@ -39,15 +46,16 @@ public class ModuleMetaVersion {
         return status;
     }
 
-    public void setStatus(ModuleStatus status) {
+    private void setStatus(ModuleStatus status) {
         this.status = status;
     }
 
     public void promote() {
-        status.promote(this);
+        status.promote(moduleStatusNotifier);
     }
 
     public void release() {
-        status.release(this);
+        status.release(moduleStatusNotifier);
     }
+
 }

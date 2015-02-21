@@ -6,13 +6,13 @@ package metadatarepo.core.moduleId;
 public class NoModuleStatus implements ModuleStatus {
 
     @Override
-    public void promote(ModuleMetaVersion moduleMetaVersion) {
-        throw new UnsupportedOperationException();
+    public void promote(ModuleStatusNotifier moduleStatusNotifier) {
+        //DO NOTHING
     }
 
     @Override
-    public void release(ModuleMetaVersion moduleMetaVersion) {
-        throw new UnsupportedOperationException();
+    public void release(ModuleStatusNotifier moduleStatusNotifier) {
+        //DO NOTHING
     }
 
     @Override
@@ -22,6 +22,6 @@ public class NoModuleStatus implements ModuleStatus {
 
     @Override
     public boolean isDefault() {
-        throw new UnsupportedOperationException();
+        return false;
     }
 }

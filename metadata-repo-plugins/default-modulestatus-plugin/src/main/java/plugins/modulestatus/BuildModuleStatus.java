@@ -1,6 +1,6 @@
 package plugins.modulestatus;
 
-import metadatarepo.core.moduleId.ModuleMetaVersion;
+import metadatarepo.core.moduleId.ModuleStatusNotifier;
 
 /**
  * @author Gregory Boissinot
@@ -9,13 +9,13 @@ public class BuildModuleStatus extends AbstractModuleStatus {
     public static final String VALUE = "BUILD";
 
     @Override
-    public void promote(ModuleMetaVersion moduleMetaVersion) {
-        moduleMetaVersion.setStatus(new IntegrationModuleStatus());
+    public void promote(ModuleStatusNotifier moduleStatusNotifier) {
+        moduleStatusNotifier.changeStatus(AbstractModuleStatus.INTEGRATION);
     }
 
     @Override
-    public void release(ModuleMetaVersion moduleMetaVersion) {
-        moduleMetaVersion.setStatus(new ReleaseModuleStatus());
+    public void release(ModuleStatusNotifier moduleStatusNotifier) {
+        moduleStatusNotifier.changeStatus(AbstractModuleStatus.RELEASE);
     }
 
     @Override
