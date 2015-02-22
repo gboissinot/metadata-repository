@@ -7,13 +7,13 @@ import plugins.maven.pomparent.version.POMParentVersion;
  */
 public class POMParentFactory {
 
-    public static POMParent bomBuild(POMParentVersion parentVersion) {
-        return new BOMBuild(parentVersion);
-    }
-
-    public static POMParent bomLatestDeps(POMParentVersion parentVersion) {
-        return new BOMLatestDeps(parentVersion);
-    }
+//    public static POMParent bomBuild(POMParentVersion parentVersion) {
+//        return new BOMBuild(parentVersion);
+//    }
+//
+//    public static POMParent bomLatestDeps(POMParentVersion parentVersion) {
+//        return new BOMLatestDeps(parentVersion);
+//    }
 
     public static POMParent noParent() {
         return NoPOMParent.getInstance();

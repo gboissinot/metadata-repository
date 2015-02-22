@@ -17,6 +17,7 @@ public class IntegrationModuleStatus extends AbstractModuleStatus {
     public void release(ModuleStatusNotifier moduleStatusNotifier) {
         moduleStatusNotifier.changeStatus(AbstractModuleStatus.RELEASE);
     }
+
     @Override
     public String getValue() {
         return VALUE;
