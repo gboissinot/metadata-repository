@@ -38,6 +38,11 @@ project(':metadata-repo-core') {
     }
 }
 
+project(':metadata-repo-plugins/default-modulestatus-plugin'){
+    dependencies {
+        compile project(':metadata-repo-core')
+    }
+}
 
 project(':metadata-repo-plugins/maven-client-plugin') {
     dependencies {
